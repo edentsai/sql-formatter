@@ -45,14 +45,16 @@ Output:
 
 Formatting Only
 -------------------------
-If you don't want syntax highlighting and only want the indentations and 
-line breaks, pass in false as the second parameter.
+If you don't want syntax highlighting, uppercasing reserved and only want
+the indentations and line breaks, pass in false as the second parameter.
 
 This is useful for outputting to error logs or other non-html formats.
 
 ```php
 <?php
-echo SqlFormatter::format($query, false);
+$highlight = false;
+$uppercase_reserved = false;
+echo SqlFormatter::format($query, $highlight, $uppercase_reserved);
 ```
 
 Output:

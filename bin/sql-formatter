@@ -39,5 +39,6 @@ function hasColorSupport() {
 }
 
 $highlight = hasColorSupport();
+$uppercase_reserved = true;
 
-echo SqlFormatter::format($sql, $highlight);
+echo SqlFormatter::format($sql, $highlight, $uppercase_reserved);
