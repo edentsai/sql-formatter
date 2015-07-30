@@ -11,6 +11,9 @@
  * @link       http://github.com/jdorn/sql-formatter
  * @version    1.2.18
  */
+
+namespace Jdorn\SqlFormatter;
+
 class SqlFormatter
 {
     // Constants for token types
@@ -426,7 +429,7 @@ class SqlFormatter
      *
      * @return String The SQL string with HTML styles and formatting wrapped in a <pre> tag
      */
-    public static function format($string, $highlight=true)
+    public static function format($string, $highlight = true, $uppercase_reserved = false)
     {
         // This variable will be populated with formatted html
         $return = '';
@@ -457,8 +460,20 @@ class SqlFormatter
             }
         }
 
+        // Reserved types
+        $reserved_types = array(
+            self::TOKEN_TYPE_RESERVED,
+            self::TOKEN_TYPE_RESERVED_TOPLEVEL,
+            self::TOKEN_TYPE_RESERVED_NEWLINE,
+        );
+
         // Format token by token
         foreach ($tokens as $i=>$token) {
+            // Get uppercased token if it is reserved and doing uppercase
+            if ($uppercase_reserved && in_array($token[self::TOKEN_TYPE], $reserved_types)) {
+                $token[self::TOKEN_VALUE] = strtoupper($token[self::TOKEN_VALUE]);
+            }
+
             // Get highlighted token if doing syntax highlighting
             if ($highlight) {
                 $highlighted = self::highlightToken($token);
